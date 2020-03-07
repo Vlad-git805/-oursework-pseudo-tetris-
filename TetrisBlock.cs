@@ -48,10 +48,60 @@ public class TetrisBlock : MonoBehaviour
             {
                 transform.position -= new Vector3(0, -1, 0);
                 AddToGrid();
+                CheckLines();
                 this.enabled = false;
                 FindObjectOfType<SpawnTetro>().NewTetromino();
             }
             prevTime = Time.time;
+        }
+    }
+
+    void CheckLines()
+    {
+        for (int i = heigh - 1; i >= 0; i--)
+        {
+            if(HasLine(i))
+            {
+                DeleteLine(i);
+                RowDown(i);
+            }
+        }
+    }
+
+    bool HasLine (int i)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            if (grid[j, i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void DeleteLine(int i)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            Destroy(grid[j, i].gameObject); ///////////////////////////
+            grid[j, i] = null;
+        }
+    }
+
+    void RowDown (int i)
+    {
+        for (int y = i; y < heigh; y++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if (grid[j, y] != null) 
+                {
+                    grid[j, y - 1] = grid[j, y];
+                    grid[j, y] = null;
+                    grid[j, y - 1].transform.position -= new Vector3(0, 1, 0);
+                }
+            }
         }
     }
 
@@ -77,7 +127,9 @@ public class TetrisBlock : MonoBehaviour
                 return false;
             }
             if (grid[roundedX, roundedY] != null)
+            {
                 return false;
+            }
         }
         return true;
     }
