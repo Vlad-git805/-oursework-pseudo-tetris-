@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TetrisBlock : MonoBehaviour
 {
+    public Vector3 rotationPoint;
     private float prevTime;
     public float fallTime = 0.9f;
     public static int heigh = 20;
@@ -29,6 +30,13 @@ public class TetrisBlock : MonoBehaviour
             transform.position += new Vector3(1, 0, 0);
             if (!ValidMove())
                 transform.position -= new Vector3(1, 0, 0);
+        }
+        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            //rotate
+            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+            if (!ValidMove())
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
         }
 
         //vertical movement
