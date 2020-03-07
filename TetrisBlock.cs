@@ -7,11 +7,13 @@ public class TetrisBlock : MonoBehaviour
     private float prevTime;
     public float fallTime = 0.9f;
 
-	void Start () {
-		
-	}
-	
-	void Update () {
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
         //Move the figure to the right and to the left
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -24,8 +26,10 @@ public class TetrisBlock : MonoBehaviour
 
         //vertical movement
         if (Time.time - prevTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
+        {
             transform.position += new Vector3(0, -1, 0);
             prevTime = Time.time;
         }
     }
 }
+
